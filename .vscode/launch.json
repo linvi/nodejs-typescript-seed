@@ -3,7 +3,7 @@
 	"configurations": [
 		{
             // Name of configuration; appears in the launch configuration drop down menu.
-            "name": "Launch Server",
+            "name": "DEBUG: gulp build:dev",
             // Type of configuration.
             "type": "node",
             // Workspace relative or absolute path to the program.
