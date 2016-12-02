@@ -1,0 +1,19 @@
+{ 
+    "compilerOptions": { 
+        "emitDecoratorMetadata": true, 
+        "experimentalDecorators": true,
+        "module": "commonjs", // umd or commonjs for outDir | amd for outFile
+        "target": "es6",
+        "sourceMap": true,
+        "outDir": "bin",
+        //"outFile": "bin/app.js",
+        "declaration": true,
+        "noImplicitAny": false
+    },
+    "exclude": [
+        "node_modules",
+        "typings",
+        "bin",
+        ".vscode"
+    ]
+} 
