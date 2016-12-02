@@ -6,7 +6,7 @@
         "target": "es6",
         "sourceMap": true,
         //"outDir": "bin",
-        "outFile": "bin/app.js",
+        "outFile": "bin/server.js",
         "declaration": true,
         "noImplicitAny": false
     },

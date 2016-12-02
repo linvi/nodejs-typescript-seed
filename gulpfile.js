@@ -1,13 +1,13 @@
 const gulp = require('gulp');
 const runSequence = require('run-sequence');
+const del = require('del');
 
+const rename = require('gulp-rename');
 const tsc = require("gulp-typescript");
 const sourcemaps = require('gulp-sourcemaps');
 const tsProject = tsc.createProject("tsconfig.json");
 
-const serverBinPath = 'bin';
-
-function buildTypescript(tsConfigPath) {
+function buildTypescript(tsConfigPath, binPath) {
     let tsProject = tsc.createProject(tsConfigPath);
     let tsResult = gulp.src('./src/**/*.ts')
         .pipe(sourcemaps.init())
@@ -15,23 +15,35 @@ function buildTypescript(tsConfigPath) {
 
     return tsResult.js
         .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest(serverBinPath));
+        .pipe(gulp.dest(binPath));
 }
 
-gulp.task('build:server', () => {
-    buildTypescript('tsconfig.json');
+gulp.task('default', () => {
+    runSequence('build:server', 'watch:server');
 });
 
-gulp.task('release:server', () => {
-    buildTypescript('tsconfig.release.json');
+// ************** DEV ****************/
+gulp.task('server:build', () => {
+    buildTypescript('tsconfig.dev.json', 'bin');
 });
 
-gulp.task('watch:server', function(){
+gulp.task('watch:server', function () {
     gulp.watch(["src/**/*.ts"], ['build:server']).on('change', function (e) {
         console.log('CLIENT : TypeScript file ' + e.path + ' has been changed. Compiling.');
     });
 });
 
-gulp.task('default', () => {
-    runSequence('build:server', 'watch:server');
+// ************** RELEASE ****************/
+gulp.task('deploy:server', ['clean'], () => {
+    buildTypescript('tsconfig.release.json', '');
+
+    gulp.src('./app.amd.js')
+        .pipe(rename('app.js'))
+        .pipe(gulp.dest("./bin"));
+});
+
+// ************** HELPERS ****************/
+
+gulp.task('clean', () => {
+    return del('bin');
 });
