@@ -1,6 +1,10 @@
+import { AuthenticationRequired, Auth } from './auth/auth';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import { RestRoutes } from "./routes/routes";
+
+var passport = require('passport');
+var Strategy = require('passport-http-bearer').Strategy;
 
 export class RestServer {
     public static start(port?: number) {
@@ -8,14 +12,26 @@ export class RestServer {
 
         app.use('/', RestRoutes);
 
-        // Configure Express application.
+        RestServer.initExpress(app);
+        RestServer.initHeaders(app);
+        RestServer.initBearerAuthentication();
+
+        // Start Server
+        if (port == null) { port = 3000; }
+        app.listen(port, function () {
+            console.log('Express server started on port ' + port + '!')
+        });
+    }
+
+    private static initExpress(app: express.Express) {
         app.use(require('morgan')('combined'));
         app.use(bodyParser.json());         // to support JSON-encoded bodies
         app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
             extended: false
         }));
+    }
 
-        // Add headers
+    private static initHeaders(app: express.Express) {
         app.use(function (req, res, next) {
 
             // Website you wish to allow to connect
@@ -34,13 +50,26 @@ export class RestServer {
             // Pass to next layer of middleware
             next();
         });
+    }
 
-        if (port == null) {
-            port = 3000;
-        }
+    private static initBearerAuthentication() {
+        // Configure the Bearer strategy for use by Passport.
+        //
+        // The Bearer strategy requires a `verify` function which receives the
+        // credentials (`token`) contained in the request.  The function must invoke
+        // `cb` with a user object, which will be set at `req.user` in route handlers
+        // after authentication.
 
-        app.listen(port, function () {
-            console.log('Express server started on port ' + port + '!')
-        });
+        passport.use(new Strategy(function (token, cb) {
+            process.nextTick(() => {
+                const authPromise = Auth.verifyBearerToken(token);
+
+                authPromise.then(function (data) {
+                    cb(null, data);
+                }).catch(function (error) {
+                    cb(null, null);
+                });
+            });
+        }));
     }
 }

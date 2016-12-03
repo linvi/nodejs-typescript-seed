@@ -85,6 +85,7 @@ gulp.task('start', ['start:dev']);
 gulp.task('serve', ['serve:dev']);
 gulp.task('build', ['build:dev']);
 gulp.task('watch', ['watch:dev']);
+gulp.task('bwatch', function() { runSequence('build:dev', 'watch:dev'); });
 
 gulp.task('default', () => {
     return runSequence('start:dev');
