@@ -1,5 +1,16 @@
 # nodejs-typescript
-Typescript + NodeJs + AMD/CommonJS + VSCode + Gulp
+## Features :
+
+* Typescript 
+* NodeJs and Express
+* AMD/CommonJS
+* Passport Bearer Authentication
+* Sourcemaps
+
+* Gulp
+* Typings
+* Automatic Build + Release
+* Visual Studio Code Debug 
 
 ## Install
 1. npm install
