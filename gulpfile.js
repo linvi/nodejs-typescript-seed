@@ -4,26 +4,18 @@ const del = require('del');
 
 const rename = require('gulp-rename');
 const nodemon = require('gulp-nodemon');
-const tsc = require("gulp-typescript");
 const sourcemaps = require('gulp-sourcemaps');
-const tsProject = tsc.createProject("tsconfig.json");
+const exec = require('child_process').exec;
 
 function buildTypescript(tsConfigPath, binPath) {
-    let tsProject = tsc.createProject(tsConfigPath);
-    let tsResult = gulp.src('./src/**/*.ts')
-        .pipe(sourcemaps.init())
-        .pipe(tsProject());
-
-    return tsResult.js
-        .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest(binPath));
+    exec('tsc -p ' + tsConfigPath, {}, null);
 }
 
 let deleteReleaseBinFolder = true;
 
 // ************** DEV ****************/
 gulp.task('build:dev', () => {
-    const build = () => { 
+    const build = () => {
         return buildTypescript('tsconfig.dev.json', 'bin');
     };
 
@@ -40,14 +32,14 @@ gulp.task('watch:dev', function () {
     });
 });
 
-gulp.task('deploy:dev', ['build:dev'], function () {
+gulp.task('serve:dev', ['build:dev'], function () {
     return nodemon({ script: 'bin/server.js', ext: 'js' })
         .on('restart', function () { });
 });
 
 gulp.task('start:dev', ['clean'], function () {
     deleteReleaseBinFolder = false;
-    return runSequence('watch:dev', 'deploy:dev');
+    return runSequence('watch:dev', 'serve:dev');
 });
 
 // ************** RELEASE ****************/
@@ -73,14 +65,14 @@ gulp.task('watch:release', function () {
     });
 });
 
-gulp.task('deploy:release', ['build:release'], function () {
+gulp.task('serve:release', ['build:release'], function () {
     return nodemon({ script: 'bin/app.js', ext: 'js' })
         .on('restart', function () { });
 });
 
 gulp.task('start:release', ['clean'], function () {
     deleteReleaseBinFolder = false;
-    return runSequence('watch:release', 'deploy:release');
+    return runSequence('watch:release', 'serve:release');
 });
 
 // ************** HELPERS ****************/
@@ -88,6 +80,11 @@ gulp.task('start:release', ['clean'], function () {
 gulp.task('clean', () => {
     return del('bin');
 });
+
+gulp.task('start', ['start:dev']);
+gulp.task('serve', ['serve:dev']);
+gulp.task('build', ['build:dev']);
+gulp.task('watch', ['watch:dev']);
 
 gulp.task('default', () => {
     return runSequence('start:dev');
