@@ -8,7 +8,9 @@ const sourcemaps = require('gulp-sourcemaps');
 const exec = require('child_process').exec;
 
 function buildTypescript(tsConfigPath, binPath) {
-    exec('tsc -p ' + tsConfigPath, {}, null);
+    exec('tsc -p ' + tsConfigPath, {}, function(error, stdout, stderr) {
+        console.error(stdout);
+    });
 }
 
 let deleteReleaseBinFolder = true;

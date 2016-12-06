@@ -4,6 +4,8 @@
     "express": "registry:dt/express#4.0.0+20160317120654",
     "express-serve-static-core": "registry:dt/express-serve-static-core#0.0.0+20160602151406",
     "mime": "registry:dt/mime#0.0.0+20160316155526",
+    "mongodb": "registry:dt/mongodb#2.1.0+20161110150902",
+    "mongoose": "registry:dt/mongoose#4.7.0+20161202023106",
     "node": "registry:dt/node#6.0.0+20160608083720",
     "serve-static": "registry:dt/serve-static#0.0.0+20160606155157"
   }

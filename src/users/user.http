@@ -1,0 +1,15 @@
+GET http://localhost:3000/user
+
+###
+GET http://localhost:3000/user_secured
+Authorization:Bearer A
+
+### 
+
+POST http://localhost:3000/user/create
+content-type: application/json
+
+{
+	"name": "linvi",
+	"password": "pass"
+}

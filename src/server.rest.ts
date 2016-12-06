@@ -1,7 +1,8 @@
-import { AuthenticationRequired, Auth } from './auth/auth';
+import { Database } from './db';
+import { Auth } from './auth';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-import { RestRoutes } from "./routes/routes";
+import { RestRoutes } from "./routes";
 
 var passport = require('passport');
 var Strategy = require('passport-http-bearer').Strategy;
@@ -10,11 +11,16 @@ export class RestServer {
     public static start(port?: number) {
         const app = express();
 
-        app.use('/', RestRoutes);
+        Database.connect();
 
         RestServer.initExpress(app);
         RestServer.initHeaders(app);
         RestServer.initBearerAuthentication();
+
+        // IMPORTANT: Routes must be defined AFTER the initialization of the app
+        // so that it can use the configured middleware!
+        app.use('/', RestRoutes);
+        
 
         // Start Server
         if (port == null) { port = 3000; }
