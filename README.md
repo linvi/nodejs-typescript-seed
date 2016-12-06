@@ -4,6 +4,7 @@
 * Typescript 
 * NodeJs and Express
 * AMD/CommonJS
+* MongoDB and Mongoose
 * Passport Bearer Authentication
 * Sourcemaps
 
@@ -11,6 +12,13 @@
 * Typings
 * Automatic Build + Release
 * Visual Studio Code Debug 
+* [Visual Studio Code RestClient](https://marketplace.visualstudio.com/items?itemName=humao.rest-client)
+
+## Coming features
+
+* Support for CRUD with MongoDB
+* Authentication associated with MongoDB (session tokens)
+* Dependency Inversion (IoC) : http://inversify.io
 
 ## Install
 1. npm install
