@@ -7,6 +7,7 @@
 * MongoDB and Mongoose
 * Passport Bearer Authentication
 * Sourcemaps
+* Cross domain request supported (CORS)
 
 * Gulp
 * Typings
@@ -20,8 +21,10 @@
 * Authentication associated with MongoDB (session tokens)
 * Dependency Inversion (IoC) : http://inversify.io
 
-## Install
-1. npm install
+## Install and Run
+
+1. run `npm install`
+2. run `gulp start` (you can add -port:4242 to start the server on a specific port)
 
 ## Debug with VSCode
 
@@ -47,3 +50,8 @@ OR
 
 1. run `gulp build:release`
 2. run `node .bin/app.js`
+
+## Configure Authentication
+
+When you first use the project, a http request is considered as a request with an authenticated user if headers contain a `Authorization` with the value `Bearer authenticated`.
+To add your custom authentication logic you can simply modify the `auth.ts` `verifyBearerToken` to implement your own authentication mechanism.

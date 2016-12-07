@@ -4,18 +4,15 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import { RestRoutes } from "./routes";
 
-var passport = require('passport');
-var Strategy = require('passport-http-bearer').Strategy;
-
 export class RestServer {
     public static start(port?: number) {
         const app = express();
 
         Database.connect();
+        Auth.initBearerAuthentication();
 
         RestServer.initExpress(app);
         RestServer.initHeaders(app);
-        RestServer.initBearerAuthentication();
 
         // IMPORTANT: Routes must be defined AFTER the initialization of the app
         // so that it can use the configured middleware!
@@ -58,24 +55,5 @@ export class RestServer {
         });
     }
 
-    private static initBearerAuthentication() {
-        // Configure the Bearer strategy for use by Passport.
-        //
-        // The Bearer strategy requires a `verify` function which receives the
-        // credentials (`token`) contained in the request.  The function must invoke
-        // `cb` with a user object, which will be set at `req.user` in route handlers
-        // after authentication.
-
-        passport.use(new Strategy(function (token, cb) {
-            process.nextTick(() => {
-                const authPromise = Auth.verifyBearerToken(token);
-
-                authPromise.then(function (data) {
-                    cb(null, data);
-                }).catch(function (error) {
-                    cb(null, null);
-                });
-            });
-        }));
-    }
+    
 }

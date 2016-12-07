@@ -20,12 +20,40 @@ export class UserController {
             });
     }
 
-    select(req: express.Request, res: express.Response): void {
-        const id: string = req.query.id;
+    update(req: express.Request, res: express.Response): void {
+        const userId: string = req.query.id;
+        const userModel: IUserModel = <IUserModel>req.body;
 
-        res.send({
-            id: id,
-            username: 'linvi'
-        });
+        _userRepository.update(userId, userModel)
+            .then(newUser => {
+                console.log('user exist!');
+                res.send(200, newUser);
+            })
+            .catch(() => {
+                res.send(400, 'Could not update user');
+            });
+    }
+
+    delete(req: express.Request, res: express.Response) {
+        const userId: string = req.query.id;
+        _userRepository.delete(userId)
+            .finally(() => {
+                // more info as for why we return 200 : http://leedavis81.github.io/is-a-http-delete-requests-idempotent/
+                res.send(200);
+            });
+    }
+
+
+    select(req: express.Request, res: express.Response): void {
+        const userId: string = req.query.id;
+
+        _userRepository.findById(userId)
+            .then(user => {
+                res.send(user);
+            })
+            .catch(() => {
+                console.log('SELECT ERROR!');
+                res.send(404);
+            });
     }
 }

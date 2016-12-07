@@ -7,8 +7,23 @@ const nodemon = require('gulp-nodemon');
 const sourcemaps = require('gulp-sourcemaps');
 const exec = require('child_process').exec;
 
+
+console.log(process.argv);
+const args = [];
+
+(function initParams() {
+    process.argv.forEach(arg => {
+        const getParamsInfo = /-([a-zA-Z]+):([a-zA-Z0-9]+)/g;
+        const result = getParamsInfo.exec(arg);
+
+        if (result) {
+            args.push(`-${result[1]}:${result[2]}`)
+        }
+    });
+})();
+
 function buildTypescript(tsConfigPath, binPath) {
-    exec('tsc -p ' + tsConfigPath, {}, function(error, stdout, stderr) {
+    return exec('tsc -p ' + tsConfigPath, {}, function(error, stdout, stderr) {
         console.error(stdout);
     });
 }
@@ -35,7 +50,7 @@ gulp.task('watch:dev', function () {
 });
 
 gulp.task('serve:dev', ['build:dev'], function () {
-    return nodemon({ script: 'bin/server.js', ext: 'js' })
+    return nodemon({ script: 'bin/server.js', args, ext: 'js' })
         .on('restart', function () { });
 });
 
@@ -68,7 +83,7 @@ gulp.task('watch:release', function () {
 });
 
 gulp.task('serve:release', ['build:release'], function () {
-    return nodemon({ script: 'bin/app.js', ext: 'js' })
+    return nodemon({ script: 'bin/app.js', args, ext: 'js' })
         .on('restart', function () { });
 });
 

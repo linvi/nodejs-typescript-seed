@@ -1,4 +1,5 @@
 import mongoose = require("mongoose");
+import * as Promise from 'bluebird';
 
 export class RepositoryBase<T extends mongoose.Document> {
 
@@ -9,7 +10,7 @@ export class RepositoryBase<T extends mongoose.Document> {
     }
 
     create(item: T): Promise<T> {
-        const promise = new Promise((resolve, reject) => {
+        const promise = new Promise<T>((resolve, reject) => {
             this._model.create(item, (error: any, result: any) => {
                 if (error) {
                     reject(error);
@@ -23,7 +24,7 @@ export class RepositoryBase<T extends mongoose.Document> {
     }
 
     retrieve(): Promise<T[]> {
-        const promise = new Promise((resolve, reject) => {
+        const promise = new Promise<T[]>((resolve, reject) => {
             this._model.find({}, (error: any, result: any) => {
                 if (error) {
                     reject(error);
@@ -36,8 +37,8 @@ export class RepositoryBase<T extends mongoose.Document> {
         return promise;
     }
 
-    update(_id: mongoose.Types.ObjectId, item: T): Promise<T> {
-        const promise = new Promise((resolve, reject) => {
+    update(_id: string, item: T): Promise<T> {
+        const promise = new Promise<T>((resolve, reject) => {
             this._model.update({ _id: _id }, item, (error: any, result: any) => {
                 if (error) {
                     reject(error);
@@ -51,7 +52,7 @@ export class RepositoryBase<T extends mongoose.Document> {
     }
 
     delete(_id: string): Promise<void> {
-        const promise = new Promise((resolve, reject) => {
+        const promise = new Promise<void>((resolve, reject) => {
             this._model.remove({ _id: this.toObjectId(_id) }, (error: any) => {
                 if (error) {
                     reject(error);
@@ -65,9 +66,9 @@ export class RepositoryBase<T extends mongoose.Document> {
     }
 
     findById(_id: string): Promise<T> {
-        const promise = new Promise((resolve, reject) => {
+        const promise = new Promise<T>((resolve, reject) => {
             this._model.findById(_id, (error: any, result: any) => {
-                if (error) {
+                if (error || result == null) {
                     reject(error);
                 } else {
                     resolve(result);
@@ -77,7 +78,6 @@ export class RepositoryBase<T extends mongoose.Document> {
 
         return promise;
     }
-
 
     private toObjectId(_id: string): mongoose.Types.ObjectId {
         return mongoose.Types.ObjectId.createFromHexString(_id)
