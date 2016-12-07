@@ -26,7 +26,6 @@ export class UserController {
 
         _userRepository.update(userId, userModel)
             .then(newUser => {
-                console.log('user exist!');
                 res.send(200, newUser);
             })
             .catch(() => {
@@ -37,9 +36,11 @@ export class UserController {
     delete(req: express.Request, res: express.Response) {
         const userId: string = req.query.id;
         _userRepository.delete(userId)
-            .finally(() => {
-                // more info as for why we return 200 : http://leedavis81.github.io/is-a-http-delete-requests-idempotent/
+            .then(() => {
                 res.send(200);
+            })
+            .catch(() => {
+                res.send(404);
             });
     }
 
@@ -52,7 +53,6 @@ export class UserController {
                 res.send(user);
             })
             .catch(() => {
-                console.log('SELECT ERROR!');
                 res.send(404);
             });
     }

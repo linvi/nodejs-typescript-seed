@@ -6,9 +6,9 @@ let i = 0;
 export class Auth {
     static AuthenticationRequired = passport.authenticate('bearer', { session: false });
 
-    static verifyBearerToken(sessionId) {
+    static verifyBearerToken(sessionId: string) {
         return new Promise((resolve, reject) => {
-            if (sessionId == 'authenticated') {
+            if (sessionId && sessionId.toLowerCase() == 'authenticated') {
                 resolve({});
             } else {
                 reject();

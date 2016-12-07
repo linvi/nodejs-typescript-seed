@@ -1,15 +1,32 @@
-GET http://localhost:3000/user
-
-###
-GET http://localhost:3000/user_secured
-Authorization:Bearer A
-
-### 
+## User CRUD lifecycle
 
 POST http://localhost:3000/user/create
 content-type: application/json
 
 {
+	"_id": "58483074dbf4e1431c6a53c4",
 	"name": "linvi",
 	"password": "pass"
 }
+
+### Select created user
+GET http://localhost:3000/user/select?id=58483074dbf4e1431c6a53c4
+
+### Update user name -- Requires authentication
+POST http://localhost:3000/user/update?id=58483074dbf4e1431c6a53c4
+content-type: application/json
+authorization: Bearer authenticated
+
+{
+	"name": "tweetinvi"
+}
+
+### Select updated user created user
+GET http://localhost:3000/user/select?id=58483074dbf4e1431c6a53c4
+
+### Delete user
+POST http://localhost:3000/user/delete?id=58483074dbf4e1431c6a53c4
+Authorization: Bearer authenticated
+
+### Try to select deleted user
+GET http://localhost:3000/user/select?id=58483074dbf4e1431c6a53c4
