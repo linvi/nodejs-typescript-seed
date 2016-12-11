@@ -1,5 +1,5 @@
 import { UserRepository } from './user.repository';
-import { IUserModel } from './user.model';
+import { IUserModel, IMongoUserModel, UserModelFactory } from './user.model';
 import { Log } from './../helpers/logger';
 import * as express from "express";
 
@@ -8,11 +8,12 @@ const _userRepository: UserRepository = new UserRepository();
 export class UserController {
 
     create(req: express.Request, res: express.Response): void {
-        const user: IUserModel = <IUserModel>req.body;
+        const user: IMongoUserModel = <IMongoUserModel>req.body;
 
         _userRepository.create(user)
-            .then((user: IUserModel) => {
-                res.send(user);
+            .then((mongoUser: IMongoUserModel) => {
+                const userModel = UserModelFactory.createFromMongo(mongoUser);
+                res.send(userModel);
             })
             .catch(error => {
                 Log.error(error);
@@ -22,11 +23,12 @@ export class UserController {
 
     update(req: express.Request, res: express.Response): void {
         const userId: string = req.query.id;
-        const userModel: IUserModel = <IUserModel>req.body;
+        const userModel: IMongoUserModel = <IMongoUserModel>req.body;
 
         _userRepository.update(userId, userModel)
-            .then(newUser => {
-                res.send(200, newUser);
+            .then((mongoUser: IMongoUserModel) => {
+                const userModel = UserModelFactory.createFromMongo(mongoUser);
+                res.send(200, userModel);
             })
             .catch(() => {
                 res.send(400, 'Could not update user');
@@ -49,8 +51,9 @@ export class UserController {
         const userId: string = req.query.id;
 
         _userRepository.findById(userId)
-            .then(user => {
-                res.send(user);
+            .then((mongoUser: IMongoUserModel) => {
+                const userModel = UserModelFactory.createFromMongo(mongoUser);
+                res.send(userModel);
             })
             .catch(() => {
                 res.send(404);

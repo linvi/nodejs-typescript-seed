@@ -1,9 +1,9 @@
-import { UserSchema } from './user.schema';
-import { IUserModel } from "./user.model";
+import { UserSchemaModel } from './user.schema';
+import { IMongoUserModel } from "./user.model";
 import { RepositoryBase } from "../common/base.repository";
 
-export class UserRepository extends RepositoryBase<IUserModel> {
+export class UserRepository extends RepositoryBase<IMongoUserModel> {
     constructor () {
-        super(UserSchema);
+        super(UserSchemaModel);
     }
 }

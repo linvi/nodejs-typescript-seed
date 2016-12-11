@@ -1,23 +1,35 @@
 import * as mongoose from "mongoose";
+import { AccountModel, IAccountModel } from './../accounts/account.model';
 
-export interface IUserModel extends mongoose.Document {
+export interface IMongoUserModel extends mongoose.Document {
     name: string;
-    password:string;
+    account: IAccountModel;
 }
 
-export class UserModel {
+export interface IUserModel {
+    name: string;
+    account: IAccountModel;
+}
 
-    private _userModel: IUserModel;
+export class UserModelFactory {
+    static createFromMongo(mongoUser: IMongoUserModel): IUserModel {
+        const user = new UserModel();
+        user.name = mongoUser.name;
 
-    constructor(userModel: IUserModel) {
-        this._userModel = userModel;
-    }
-    
-    get name (): string {
-        return this._userModel.name;
-    }
+        if (mongoUser.account != null) {
+            const mongoAccount = mongoUser.account;
+            const account = new AccountModel();
 
-    get password(): string {
-        return this._userModel.password;
+            account.email = mongoAccount.email;
+            account.password = mongoAccount.password
+            user.account = account;
+        }
+
+        return user;
     }
+}
+
+export class UserModel implements IUserModel {
+    name: string;
+    account: IAccountModel;
 }
