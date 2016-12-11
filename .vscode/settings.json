@@ -3,7 +3,7 @@
     "search.exclude": {
         "**/node_modules": true,
         "**/bower_components": true,
-        "**/postman": true,
+        "**/.postman": true,
         "**/bin": true
     },
     "files.exclude": {
@@ -11,7 +11,7 @@
         "**/.svn": true,
         "**/.hg": true,
         "**/.DS_Store": true,
-        "**/postman": true,
+        "**/.postman": true,
         "**/bin": true
     }
 }
