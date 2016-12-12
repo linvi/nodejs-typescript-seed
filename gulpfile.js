@@ -34,28 +34,18 @@ gulp.task('build:dev', (cb) => {
 });
 
 gulp.task('watch:dev', function () {
-    console.log('running tsc --watch!');
-
-    run('tsc --watch');
-    // return gulp.watch(["src/**/*.ts"], ['build:dev']).on('change', function (e) {
-    //     console.log('REST : TypeScript file ' + e.path + ' has been changed. Compiling.');
-    // });
+    run('tsc --watch -p tsconfig.dev.json');
 });
 
 gulp.task('serve:dev', ['build:dev'], function () {
-    return nodemon({ script: 'bin/server.js', args, ext: 'js' })
+    return nodemon({ script: 'bin/server.js', watch: ['bin'], args, ext: 'js' })
         .on('restart', function () { });
 });
-
-gulp.task('serve:only', function () {
-    return nodemon({ script: 'bin/server.js', args, ext: 'js' })
-        .on('restart', function () { });
-})
 
 gulp.task('start:dev', function () {
     deleteReleaseBinFolder = false;
 
-    runSequence('clean', 'build:dev', 'watch:dev', 'serve:only');
+    runSequence('clean', 'watch:dev', 'serve:dev');
 });
 
 // ************** RELEASE ****************/
@@ -101,7 +91,7 @@ gulp.task('start', ['start:dev']);
 gulp.task('serve', ['serve:dev']);
 gulp.task('build', ['build:dev']);
 gulp.task('watch', ['watch:dev']);
-gulp.task('bwatch', function () { runSequence('build:dev', 'watch:dev'); });
+gulp.task('bwatch', ['build:dev'], function () { gulp.start('watch:dev'); });
 
 gulp.task('default', () => {
     return runSequence('start:dev');

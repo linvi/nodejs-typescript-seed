@@ -18,7 +18,7 @@ export class Database {
 
     static get mongooseConnection(): Mongoose.Connection {
         if (!this._mongooseConnection) {
-            this.connect()
+            this.connect();
         }
 
         return this._mongooseConnection;

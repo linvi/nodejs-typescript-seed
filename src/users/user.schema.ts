@@ -28,11 +28,6 @@ UserSchema.pre('save', function (next) {
         }
     }
 
-    // if (user.account == null || user.account.password != null) {
-    //     next();
-    // } else {
-    //     next(new Error('user.account is invalid.'));
-    // }
     next();
 });
 
