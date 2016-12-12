@@ -12,6 +12,6 @@
         "**/.hg": true,
         "**/.DS_Store": true,
         "**/.postman": true,
-        "**/bin": true
+        "**/bin": false
     }
 }

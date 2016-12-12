@@ -5,10 +5,10 @@ const del = require('del');
 const rename = require('gulp-rename');
 const nodemon = require('gulp-nodemon');
 const sourcemaps = require('gulp-sourcemaps');
-const exec = require('child_process').exec;
+const run = require('child_process').exec;
+const exec = require('gulp-exec');
 
 
-console.log(process.argv);
 const args = [];
 
 (function initParams() {
@@ -22,31 +22,24 @@ const args = [];
     });
 })();
 
-function buildTypescript(tsConfigPath, binPath) {
-    return exec('tsc -p ' + tsConfigPath, {}, function(error, stdout, stderr) {
-        console.error(stdout);
-    });
+function buildTypescript(tsConfigPath, binPath, cb) {
+    return gulp.src('').pipe(exec('tsc -p ' + tsConfigPath));
 }
 
 let deleteReleaseBinFolder = true;
 
 // ************** DEV ****************/
-gulp.task('build:dev', () => {
-    const build = () => {
-        return buildTypescript('tsconfig.dev.json', 'bin');
-    };
-
-    if (deleteReleaseBinFolder) {
-        return del('bin').then(build);
-    } else {
-        return build();
-    }
+gulp.task('build:dev', (cb) => {
+    return buildTypescript('tsconfig.dev.json', 'bin');
 });
 
 gulp.task('watch:dev', function () {
-    return gulp.watch(["src/**/*.ts"], ['build:dev']).on('change', function (e) {
-        console.log('REST : TypeScript file ' + e.path + ' has been changed. Compiling.');
-    });
+    console.log('running tsc --watch!');
+
+    run('tsc --watch');
+    // return gulp.watch(["src/**/*.ts"], ['build:dev']).on('change', function (e) {
+    //     console.log('REST : TypeScript file ' + e.path + ' has been changed. Compiling.');
+    // });
 });
 
 gulp.task('serve:dev', ['build:dev'], function () {
@@ -54,9 +47,15 @@ gulp.task('serve:dev', ['build:dev'], function () {
         .on('restart', function () { });
 });
 
-gulp.task('start:dev', ['clean'], function () {
+gulp.task('serve:only', function () {
+    return nodemon({ script: 'bin/server.js', args, ext: 'js' })
+        .on('restart', function () { });
+})
+
+gulp.task('start:dev', function () {
     deleteReleaseBinFolder = false;
-    return runSequence('watch:dev', 'serve:dev');
+
+    runSequence('clean', 'build:dev', 'watch:dev', 'serve:only');
 });
 
 // ************** RELEASE ****************/
@@ -102,7 +101,7 @@ gulp.task('start', ['start:dev']);
 gulp.task('serve', ['serve:dev']);
 gulp.task('build', ['build:dev']);
 gulp.task('watch', ['watch:dev']);
-gulp.task('bwatch', function() { runSequence('build:dev', 'watch:dev'); });
+gulp.task('bwatch', function () { runSequence('build:dev', 'watch:dev'); });
 
 gulp.task('default', () => {
     return runSequence('start:dev');
