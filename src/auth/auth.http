@@ -1,0 +1,15 @@
+### Create token
+
+POST http://localhost:3000/auth/authenticate
+content-type: application/json
+
+{
+	"username": "linvi",
+	"password": "password"
+}
+
+### Verify authentication token
+
+GET http://localhost:3000/auth/verify
+content-type: application/json
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ODUzNTg3YzI5MGMwZjQ2ZTQzZWY1MDYiLCJpYXQiOjE0ODIwMjk2MjMsImV4cCI6MTQ4MjAzMTA2M30.oamsRnxXHuhprtSmhgM7KH2jRArzGTWJwukdrOwM0AM
