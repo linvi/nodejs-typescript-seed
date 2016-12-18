@@ -7,29 +7,19 @@ export interface IMongoUserModel extends mongoose.Document {
 }
 
 export interface IUserModel {
+    _id: string;
     name: string;
     account: IAccountModel;
 }
 
 export class UserModelFactory {
     static createFromMongo(mongoUser: IMongoUserModel): IUserModel {
-        const user = new UserModel();
-        user.name = mongoUser.name;
-
-        if (mongoUser.account != null) {
-            const mongoAccount = mongoUser.account;
-            const account = new AccountModel();
-
-            account.email = mongoAccount.email;
-            account.password = mongoAccount.password
-            user.account = account;
-        }
-
-        return user;
+        return mongoUser;
     }
 }
 
 export class UserModel implements IUserModel {
+    _id: string;
     name: string;
     account: IAccountModel;
 }

@@ -11,10 +11,13 @@
     "bluebird": "^3.4.6",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
+    "jsonwebtoken": "^7.2.1",
+    "jwt-simple": "^0.5.1",
     "mongoose": "^4.7.1",
     "morgan": "^1.7.0",
     "passport": "^0.3.2",
     "passport-http-bearer": "^1.0.1",
+    "passport-jwt": "^2.2.1",
     "requirejs": "^2.3.2"
   },
   "devDependencies": {
@@ -25,6 +28,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.9.1",
     "run-sequence": "^1.2.2",
-    "typescript": "latest"
+    "typescript": "latest",
+    "win-spawn": "^2.0.0"
   }
 }

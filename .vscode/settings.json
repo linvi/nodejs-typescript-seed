@@ -13,5 +13,6 @@
         "**/.DS_Store": true,
         "**/.postman": true,
         "**/bin": false
-    }
+    },
+    "typescript.check.workspaceVersion": false
 }

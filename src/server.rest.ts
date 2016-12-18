@@ -1,15 +1,18 @@
 import { Database } from './db';
-import { Auth } from './auth';
+import { Auth } from './auth/auth';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import { RestRoutes } from "./routes";
+
+// var auth = require("./auth.js")();
+var jwt = require("jwt-simple");
 
 export class RestServer {
     public static start(port?: number) {
         const app = express();
 
         Database.connect();
-        Auth.initBearerAuthentication();
+        Auth.initJWTAuthentication();
 
         RestServer.initExpress(app);
         RestServer.initHeaders(app);
@@ -17,7 +20,6 @@ export class RestServer {
         // IMPORTANT: Routes must be defined AFTER the initialization of the app
         // so that it can use the configured middleware!
         app.use('/', RestRoutes);
-        
 
         // Start Server
         if (port == null) { port = 3000; }
@@ -55,5 +57,5 @@ export class RestServer {
         });
     }
 
-    
+
 }

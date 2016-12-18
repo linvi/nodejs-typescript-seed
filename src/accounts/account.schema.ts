@@ -7,6 +7,7 @@ export const AccountSchema: Mongoose.Schema = mongoose.Schema({
     password: { type: String, required: true },
     email: { type: String, required: true }
 }, {
+        _id: false,
         strict: 'throw',
         useNestedStrict: true
     });

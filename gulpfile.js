@@ -6,8 +6,8 @@ const rename = require('gulp-rename');
 const nodemon = require('gulp-nodemon');
 const sourcemaps = require('gulp-sourcemaps');
 const run = require('child_process').exec;
+const spawn = require('win-spawn');
 const exec = require('gulp-exec');
-
 
 const args = [];
 
@@ -34,7 +34,11 @@ gulp.task('build:dev', (cb) => {
 });
 
 gulp.task('watch:dev', function () {
-    run('tsc --watch -p tsconfig.dev.json');
+    const tscWatch = spawn('tsc --watch -p tsconfig.dev.json');
+    tscWatch.stdout.on('data', function (data) {
+        const toDisplay = data.toString().replace(/[\n\r]+/g, '');
+        console.log(toDisplay);
+    });
 });
 
 gulp.task('serve:dev', ['build:dev'], function () {
