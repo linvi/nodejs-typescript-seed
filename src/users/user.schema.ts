@@ -1,12 +1,14 @@
+import { Auth } from './../auth/auth';
 import * as Mongoose from "mongoose";
-import { Database } from '../db';
+const bcrypt = require("bcrypt");
 
+import { Database } from '../db';
 import { IMongoUserModel } from "./user.model";
 import { AccountSchema } from './../accounts/account.schema';
 
 
-var mongoose = Database.mongooseInstance;
-var mongooseConnection = Database.mongooseConnection;
+const mongoose = Database.mongooseInstance;
+const mongooseConnection = Database.mongooseConnection;
 
 const UserSchema: Mongoose.Schema = mongoose.Schema({
     name: { type: String, required: true },
@@ -21,14 +23,27 @@ UserSchema.pre('save', function (next) {
 
     if (user.account != null) {
         const account = user.account;
+        const password = account.password;
 
         if (account.email.indexOf('testme') == -1) {
             next(new Error('EMAIL'));
             return;
         }
-    }
 
-    next();
+        if (!user.isModified('account.password')) 
+            return next();
+
+        bcrypt.genSalt(Auth.SALT_WORK_FACTOR, function (err, salt) {
+            if (err) return next(err);
+
+            bcrypt.hash(password, salt, function (err, hash) {
+                if (err) return next(err);
+
+                user.account.password = hash;
+                next();
+            });
+        });
+    }
 });
 
 export const UserSchemaModel = mongooseConnection.model<IMongoUserModel>("Users", UserSchema);

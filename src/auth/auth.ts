@@ -14,6 +14,8 @@ export class Auth {
         return "MyS3cr3tK3Y";
     }
 
+    static SALT_WORK_FACTOR: number = 10;
+
     static initJWTAuthentication() {
 
         const config = {
