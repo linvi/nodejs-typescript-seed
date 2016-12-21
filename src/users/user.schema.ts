@@ -1,11 +1,10 @@
 import { Auth } from './../auth/auth';
 import * as Mongoose from "mongoose";
-const bcrypt = require("bcrypt");
+import * as bcrypt from 'bcrypt';
 
 import { Database } from '../db';
 import { IMongoUserModel } from "./user.model";
 import { AccountSchema } from './../accounts/account.schema';
-
 
 const mongoose = Database.mongooseInstance;
 const mongooseConnection = Database.mongooseConnection;

@@ -1,9 +1,9 @@
 import { UserSchemaModel } from './user.schema';
 import { IMongoUserModel } from "./user.model";
 import { RepositoryBase } from "../common/base.repository";
-import * as Promise from 'bluebird';
 
-const bcrypt = require('bcrypt');
+import * as Promise from 'bluebird';
+import * as bcrypt from 'bcrypt';
 
 export class UserRepository extends RepositoryBase<IMongoUserModel> {
     constructor() {
