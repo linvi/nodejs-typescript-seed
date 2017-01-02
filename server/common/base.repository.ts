@@ -1,3 +1,4 @@
+import { UserModel } from './../users/user.model';
 import mongoose = require("mongoose");
 import * as Promise from 'bluebird';
 

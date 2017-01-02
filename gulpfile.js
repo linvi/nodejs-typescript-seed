@@ -13,7 +13,7 @@ const args = [];
 
 (function initParams() {
     process.argv.forEach(arg => {
-        const getParamsInfo = /-([a-zA-Z]+):([a-zA-Z0-9]+)/g;
+        const getParamsInfo = /-([a-zA-Z\-]+):([a-zA-Z0-9]+)/g;
         const result = getParamsInfo.exec(arg);
 
         if (result) {
@@ -28,8 +28,13 @@ function buildTypescript(tsConfigPath, binPath, cb) {
 
 let deleteReleaseBinFolder = true;
 
+gulp.task('copy', () => {
+    return gulp.src('./client/**/*.html')
+            .pipe(gulp.dest('./bin/client/'));
+});
+
 // ************** DEV ****************/
-gulp.task('build:dev', (cb) => {
+gulp.task('build:dev', ['copy'], (cb) => {
     return buildTypescript('tsconfig.dev.json', 'bin');
 });
 
@@ -42,7 +47,7 @@ gulp.task('watch:dev', function () {
 });
 
 gulp.task('serve:dev', ['build:dev'], function () {
-    return nodemon({ script: 'bin/server.js', watch: ['bin'], args, ext: 'js' })
+    return nodemon({ script: 'bin/server/server.js', watch: ['bin/server'], args, ext: 'js' })
         .on('restart', function () { });
 });
 
@@ -53,13 +58,13 @@ gulp.task('start:dev', function () {
 });
 
 // ************** RELEASE ****************/
-gulp.task('build:release', () => {
+gulp.task('build:release', ['copy'], () => {
     const build = () => {
         buildTypescript('tsconfig.release.json', '');
 
         return gulp.src('./app.amd.js')
             .pipe(rename('app.js'))
-            .pipe(gulp.dest("./bin"));
+            .pipe(gulp.dest("./bin/server"));
     };
 
     if (deleteReleaseBinFolder) {
@@ -70,7 +75,7 @@ gulp.task('build:release', () => {
 });
 
 gulp.task('watch:release', function () {
-    return gulp.watch(["src/**/*.ts"], ['build:release']).on('change', function (e) {
+    return gulp.watch(["server/**/*.ts"], ['build:release']).on('change', function (e) {
         console.log('REST : TypeScript file ' + e.path + ' has been changed. Compiling.');
     });
 });

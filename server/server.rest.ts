@@ -8,9 +8,7 @@ import { RestRoutes } from "./routes";
 var jwt = require("jwt-simple");
 
 export class RestServer {
-    public static start(port?: number) {
-        const app = express();
-
+    public static start(app: express.Express, port?: number, restRoutePrefix: string = '/') {
         Database.connect();
         Auth.initJWTAuthentication();
 
@@ -19,12 +17,13 @@ export class RestServer {
 
         // IMPORTANT: Routes must be defined AFTER the initialization of the app
         // so that it can use the configured middleware!
-        app.use('/', RestRoutes);
-
+        app.use(restRoutePrefix, RestRoutes);
+        
         // Start Server
         if (port == null) { port = 3000; }
+
         app.listen(port, function () {
-            console.log('Express server started on port ' + port + '!')
+            console.log('REST SERVER started on port ' + port + '!')
         });
     }
 
@@ -56,6 +55,4 @@ export class RestServer {
             next();
         });
     }
-
-
 }
