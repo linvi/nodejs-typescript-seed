@@ -8,6 +8,12 @@ const sourcemaps = require('gulp-sourcemaps');
 const run = require('child_process').exec;
 const spawn = require('win-spawn');
 const exec = require('gulp-exec');
+const sass = require('gulp-sass');
+
+// SCRIPT START
+
+const sassInput = './client/**/*.scss';
+const sassOutput = './bin/client/';
 
 const args = [];
 
@@ -28,14 +34,31 @@ function buildTypescript(tsConfigPath, binPath, cb) {
 
 let deleteReleaseBinFolder = true;
 
-gulp.task('copy', () => {
+gulp.task('copyHtml', () => {
     return gulp.src('./client/**/*.html')
-            .pipe(gulp.dest('./bin/client/'));
+        .pipe(gulp.dest('./bin/client/'));
 });
 
 // ************** DEV ****************/
-gulp.task('build:dev', ['copy'], (cb) => {
+gulp.task('build:dev', ['copyHtml', 'sass:dev'], (cb) => {
     return buildTypescript('tsconfig.dev.json', 'bin');
+});
+
+gulp.task('sass:dev', function () {
+    const sassOptions = {
+        errLogToConsole: true,
+        outputStyle: 'expanded'
+    };
+
+    return gulp
+        // Find all `.scss` files from the `input` folder
+        .src(sassInput)
+        // Run Sass on those files
+        .pipe(sourcemaps.init())
+        .pipe(sass(sassOptions).on('error', sass.logError))
+        .pipe(sourcemaps.write('./'))
+        // Write the resulting CSS in the output folder
+        .pipe(gulp.dest(sassOutput));
 });
 
 gulp.task('watch:dev', function () {
@@ -43,6 +66,10 @@ gulp.task('watch:dev', function () {
     tscWatch.stdout.on('data', function (data) {
         const toDisplay = data.toString().replace(/[\n\r]+/g, '');
         console.log(toDisplay);
+    });
+
+    gulp.watch(["client/**/*.html", "client/**/*.scss"], ['copyHtml', 'sass' ]).on('change', function (e) {
+        console.log('Resource file ' + e.path + ' has been changed. Updating.');
     });
 });
 
@@ -58,7 +85,7 @@ gulp.task('start:dev', function () {
 });
 
 // ************** RELEASE ****************/
-gulp.task('build:release', ['copy'], () => {
+gulp.task('build:release', ['copyHtml', 'sass:dev'], () => {
     const build = () => {
         buildTypescript('tsconfig.release.json', '');
 
@@ -101,6 +128,7 @@ gulp.task('serve', ['serve:dev']);
 gulp.task('build', ['build:dev']);
 gulp.task('watch', ['watch:dev']);
 gulp.task('bwatch', ['build:dev'], function () { gulp.start('watch:dev'); });
+gulp.task('sass', ['sass:dev']);
 
 gulp.task('default', () => {
     return runSequence('start:dev');
