@@ -35,6 +35,9 @@ function buildTypescript(tsConfigPath, binPath, cb) {
 let deleteReleaseBinFolder = true;
 
 gulp.task('copyHtml', () => {
+    gulp.src('./client/**/*.js')
+        .pipe(gulp.dest('./bin/client/'));
+
     return gulp.src('./client/**/*.html')
         .pipe(gulp.dest('./bin/client/'));
 });
@@ -68,7 +71,7 @@ gulp.task('watch:dev', function () {
         console.log(toDisplay);
     });
 
-    gulp.watch(["client/**/*.html", "client/**/*.scss"], ['copyHtml', 'sass' ]).on('change', function (e) {
+    gulp.watch(["client/**/*.html", "client/**/*.scss"], ['copyHtml', 'sass']).on('change', function (e) {
         console.log('Resource file ' + e.path + ' has been changed. Updating.');
     });
 });
