@@ -6,13 +6,14 @@
         "target": "es6",
         "sourceMap": true,
         //"outDir": "bin",
-        "outFile": "bin/server.js",
-        "declaration": true,
+        "outFile": "bin/server/server.js",
+        "declaration": false,
         "noImplicitAny": false
     },
     "exclude": [
         "node_modules",
         "bin",
-        ".vscode"
+        ".vscode",
+        "client"
     ]
 } 

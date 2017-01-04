@@ -109,7 +109,7 @@ gulp.task('build:release', ['copyHtml', 'sass:dev'], () => {
 
         return gulp.src('./app.amd.js')
             .pipe(rename('app.js'))
-            .pipe(gulp.dest("./bin/server"));
+            .pipe(gulp.dest("./bin"));
     };
 
     if (deleteReleaseBinFolder) {

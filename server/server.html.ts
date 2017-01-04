@@ -5,11 +5,10 @@ export class HtmlServer {
     public static app = express();
 
     public static start(app: express.Express, port: number, start: boolean) {
-        console.log('__dirname = ' + __dirname);
-
-        const fileLocation = '../client/app';
-        const websitePath = path.resolve(__dirname, `${fileLocation}`);
-        const websiteDebugPath = path.resolve(__dirname, `../../`);
+        const serverDirectory = path.resolve();
+        const fileLocation = 'client/app';
+        const websitePath = path.resolve(serverDirectory, `${fileLocation}`);
+        const websiteDebugPath = path.resolve(serverDirectory, `../`);
 
         app.use(express.static(websitePath));
         app.use(express.static(websiteDebugPath));

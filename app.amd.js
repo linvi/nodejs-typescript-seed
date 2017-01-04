@@ -4,4 +4,4 @@ if (typeof define !== 'function') {
   var define = require('amdefine')(module) 
 }
 
-var app = requirejs('server');
+var app = requirejs('server/server');
