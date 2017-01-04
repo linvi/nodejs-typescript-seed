@@ -22,6 +22,7 @@
     "requirejs": "^2.3.2"
   },
   "devDependencies": {
+    "browser-sync": "^2.18.5",
     "del": "^2.2.2",
     "gulp": "^3.9.1",
     "gulp-exec": "^2.1.3",

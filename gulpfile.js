@@ -9,6 +9,7 @@ const run = require('child_process').exec;
 const spawn = require('win-spawn');
 const exec = require('gulp-exec');
 const sass = require('gulp-sass');
+const browserSync = require('browser-sync').create();
 
 // SCRIPT START
 
@@ -43,6 +44,7 @@ gulp.task('copyHtml', () => {
 });
 
 // ************** DEV ****************/
+
 gulp.task('build:dev', ['copyHtml', 'sass:dev'], (cb) => {
     return buildTypescript('tsconfig.dev.json', 'bin');
 });
@@ -65,6 +67,19 @@ gulp.task('sass:dev', function () {
 });
 
 gulp.task('watch:dev', function () {
+    browserSync.init({
+        files: ['bin/client/app/**/*.css'],
+        socket: {
+            domain: "localhost:3042"
+        },
+        ui: {
+            port: 3043,
+        },
+        port: 3042,
+        server: false,
+        notify: false
+    });
+
     const tscWatch = spawn('tsc --watch -p tsconfig.dev.json');
     tscWatch.stdout.on('data', function (data) {
         const toDisplay = data.toString().replace(/[\n\r]+/g, '');
