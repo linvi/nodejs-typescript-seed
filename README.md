@@ -1,4 +1,6 @@
 # nodejs-typescript
+A lightweight node application with 2 servers for the FrontEnd and Backend.
+
 ## Features :
 
 * Typescript 
@@ -6,6 +8,7 @@
 * JWT Authentication
 * AMD/CommonJS
 * MongoDB and Mongoose
+* HTML Client server
 * CRUD operations example with Mongoose
 * Sourcemaps
 * Cross domain request supported (CORS)
@@ -49,6 +52,12 @@ OR
 
 1. run `gulp build:release`
 2. run `node .bin/app.js`
+
+## Options
+
+* `-port` to specify a unique port for both the REST and CLIENT servers.
+* `-port-rest:3000` to specify the port used by the REST Server.
+* `-port-web:3000` to specify the port used by the CLIENT Server.
 
 ## Configure Authentication
 
