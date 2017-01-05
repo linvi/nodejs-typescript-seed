@@ -36,11 +36,8 @@ function buildTypescript(tsConfigPath, binPath, cb) {
 let deleteReleaseBinFolder = true;
 
 gulp.task('copyHtml', () => {
-    gulp.src('./client/**/*.js')
-        .pipe(gulp.dest('./bin/client/'));
-
-    return gulp.src('./client/**/*.html')
-        .pipe(gulp.dest('./bin/client/'));
+    return gulp.src('client/**/*.html')
+        .pipe(gulp.dest('bin/client/'));
 });
 
 // ************** DEV ****************/
@@ -103,9 +100,12 @@ gulp.task('start:dev', function () {
 });
 
 // ************** RELEASE ****************/
-gulp.task('build:release', ['copyHtml', 'sass:dev'], () => {
+gulp.task('build:release', () => {
     const build = () => {
+        runSequence('copyHtml', 'sass:dev');
+
         buildTypescript('tsconfig.release.json', '');
+        buildTypescript('tsconfig.release.client.json', '');
 
         return gulp.src('./app.amd.js')
             .pipe(rename('app.js'))
