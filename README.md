@@ -3,22 +3,21 @@
 
 * Typescript 
 * NodeJs and Express
+* JWT Authentication
 * AMD/CommonJS
 * MongoDB and Mongoose
-* Passport Bearer Authentication
+* CRUD operations example with Mongoose
 * Sourcemaps
 * Cross domain request supported (CORS)
 
 * Gulp
 * Typings
+* BrowserSync for SCSS
 * Automatic Build + Release
 * Visual Studio Code Debug 
 * [Visual Studio Code RestClient](https://marketplace.visualstudio.com/items?itemName=humao.rest-client)
 
 ## Coming features
-
-* Support for CRUD with MongoDB
-* Authentication associated with MongoDB (session tokens)
 * Dependency Inversion (IoC) : http://inversify.io
 
 ## Install and Run
