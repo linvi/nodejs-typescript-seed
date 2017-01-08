@@ -1,7 +1,7 @@
+import { IMongoUserModel } from './../users/user.schema';
 import { IMongoSessionModel } from './../sessions/session.schema';
 import { SessionRepository } from './../sessions/session.repository';
 import { JWTToken } from './token.model';
-import { IMongoUserModel } from './../users/user.model';
 import { UserRepository } from './../users/user.repository';
 var passport = require("passport");
 var passportJWT = require("passport-jwt");

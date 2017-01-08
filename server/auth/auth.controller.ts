@@ -1,6 +1,6 @@
+import { IMongoUserModel } from './../users/user.schema';
 import { JWTToken } from './token.model';
 import { SessionSchemaModel, IMongoSessionModel } from './../sessions/session.schema';
-import { IMongoUserModel } from './../users/user.model';
 import { SessionModel } from './../sessions/session.model';
 import { SessionRepository } from './../sessions/session.repository';
 import { Auth } from './auth';

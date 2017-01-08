@@ -1,5 +1,7 @@
+import { IMongoUserModel } from './user.schema';
 import { UserRepository } from './user.repository';
-import { IUserModel, IMongoUserModel, UserModelFactory } from './user.model';
+import { UserModel, UserModelFactory } from './user.model';
+
 import { Log } from './../helpers/logger';
 import * as express from "express";
 

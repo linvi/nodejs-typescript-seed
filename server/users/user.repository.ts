@@ -1,5 +1,4 @@
-import { UserSchemaModel } from './user.schema';
-import { IMongoUserModel } from "./user.model";
+import { UserSchemaModel, IMongoUserModel } from './user.schema';
 import { RepositoryBase } from "../common/base.repository";
 
 import * as Promise from 'bluebird';
