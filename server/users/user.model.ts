@@ -1,10 +1,6 @@
 import * as Mongoose from "mongoose";
+import { IMongoUserModel } from './user.schema';
 import { AccountModel, IAccountModel } from './../accounts/account.model';
-
-export interface IMongoUserModel extends Mongoose.Document {
-    name: string;
-    account: IAccountModel;
-}
 
 export interface IUserModel {
     _id: string;

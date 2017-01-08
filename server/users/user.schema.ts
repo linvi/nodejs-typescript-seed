@@ -1,14 +1,16 @@
+import { IAccountModel } from './../accounts/account.model';
 import { Validators } from './../helpers/validators';
 import { Auth } from './../auth/auth';
 import * as Mongoose from "mongoose";
 import * as bcrypt from 'bcrypt';
 
 import { Database } from '../db';
-import { IMongoUserModel } from "./user.model";
 import { AccountSchema } from './../accounts/account.schema';
 
 const mongooseInstance = Database.mongooseInstance;
 const mongooseConnection = Database.mongooseConnection;
+
+
 
 const UserSchema: Mongoose.Schema = mongooseInstance.Schema(
     {
@@ -49,5 +51,10 @@ UserSchema.pre('save', function (next) {
         next();
     }
 });
+
+export interface IMongoUserModel extends Mongoose.Document {
+    name: string;
+    account: IAccountModel;
+}
 
 export const UserSchemaModel = mongooseConnection.model<IMongoUserModel>("Users", UserSchema);
