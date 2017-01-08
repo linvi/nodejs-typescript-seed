@@ -1,12 +1,12 @@
 import { UserModel } from './../users/user.model';
-import mongoose = require("mongoose");
+import * as Mongoose from 'mongoose';
 import * as Promise from 'bluebird';
 
-export class RepositoryBase<T extends mongoose.Document> {
+export class RepositoryBase<T extends Mongoose.Document> {
 
-    protected _model: mongoose.Model<mongoose.Document>;
+    protected _model: Mongoose.Model<Mongoose.Document>;
 
-    constructor(schemaModel: mongoose.Model<mongoose.Document>) {
+    constructor(schemaModel: Mongoose.Model<Mongoose.Document>) {
         this._model = schemaModel;
     }
 
@@ -80,7 +80,7 @@ export class RepositoryBase<T extends mongoose.Document> {
         return promise;
     }
 
-    private toObjectId(_id: string): mongoose.Types.ObjectId {
-        return mongoose.Types.ObjectId.createFromHexString(_id)
+    private toObjectId(_id: string): Mongoose.Types.ObjectId {
+        return Mongoose.Types.ObjectId.createFromHexString(_id)
     }
 }

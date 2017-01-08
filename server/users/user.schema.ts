@@ -1,3 +1,4 @@
+import { Validators } from './../helpers/validators';
 import { Auth } from './../auth/auth';
 import * as Mongoose from "mongoose";
 import * as bcrypt from 'bcrypt';
@@ -6,16 +7,18 @@ import { Database } from '../db';
 import { IMongoUserModel } from "./user.model";
 import { AccountSchema } from './../accounts/account.schema';
 
-const mongoose = Database.mongooseInstance;
+const mongooseInstance = Database.mongooseInstance;
 const mongooseConnection = Database.mongooseConnection;
 
-const UserSchema: Mongoose.Schema = mongoose.Schema({
-    name: { type: String, required: true },
-    account: AccountSchema
-}, {
+const UserSchema: Mongoose.Schema = mongooseInstance.Schema(
+    {
+        name: { type: String, required: true },
+        account: AccountSchema
+    }, {
         strict: 'throw',
         useNestedStrict: true
     });
+
 
 UserSchema.pre('save', function (next) {
     const user = this;
@@ -24,12 +27,12 @@ UserSchema.pre('save', function (next) {
         const account = user.account;
         const password = account.password;
 
-        if (account.email.indexOf('testme') == -1) {
+        if (!Validators.validateEmail(account.email)) {
             next(new Error('EMAIL'));
             return;
         }
 
-        if (!user.isModified('account.password')) 
+        if (!user.isModified('account.password'))
             return next();
 
         bcrypt.genSalt(Auth.SALT_WORK_FACTOR, function (err, salt) {

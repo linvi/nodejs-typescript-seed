@@ -1,7 +1,7 @@
-import * as mongoose from "mongoose";
+import * as Mongoose from "mongoose";
 import { AccountModel, IAccountModel } from './../accounts/account.model';
 
-export interface IMongoUserModel extends mongoose.Document {
+export interface IMongoUserModel extends Mongoose.Document {
     name: string;
     account: IAccountModel;
 }
