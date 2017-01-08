@@ -21,7 +21,7 @@
 				}
 			],
 			"request": {
-				"url": "http://localhost:8000/user/create",
+				"url": "http://localhost:3000/api/user/create",
 				"method": "POST",
 				"header": [
 					{
@@ -93,7 +93,7 @@
 				}
 			],
 			"request": {
-				"url": "http://localhost:8000/user/create",
+				"url": "http://localhost:3000/api/user/create",
 				"method": "POST",
 				"header": [
 					{
@@ -129,7 +129,7 @@
 				}
 			],
 			"request": {
-				"url": "http://localhost:8000/user/create",
+				"url": "http://localhost:3000/api/user/create",
 				"method": "POST",
 				"header": [
 					{
@@ -165,7 +165,7 @@
 				}
 			],
 			"request": {
-				"url": "http://localhost:8000/user/create",
+				"url": "http://localhost:3000/api/user/create",
 				"method": "POST",
 				"header": [
 					{
@@ -201,7 +201,7 @@
 				}
 			],
 			"request": {
-				"url": "http://localhost:8000/user/create",
+				"url": "http://localhost:3000/api/user/create",
 				"method": "POST",
 				"header": [
 					{
@@ -237,7 +237,7 @@
 				}
 			],
 			"request": {
-				"url": "http://localhost:8000/user/create",
+				"url": "http://localhost:3000/api/user/create",
 				"method": "POST",
 				"header": [
 					{
@@ -273,7 +273,7 @@
 				}
 			],
 			"request": {
-				"url": "http://localhost:8000/user/create",
+				"url": "http://localhost:3000/api/user/create",
 				"method": "POST",
 				"header": [
 					{
@@ -309,7 +309,7 @@
 				}
 			],
 			"request": {
-				"url": "http://localhost:8000/user/create",
+				"url": "http://localhost:3000/api/user/create",
 				"method": "POST",
 				"header": [
 					{
@@ -345,7 +345,7 @@
 				}
 			],
 			"request": {
-				"url": "http://localhost:8000/user/create",
+				"url": "http://localhost:3000/api/user/create",
 				"method": "POST",
 				"header": [
 					{
