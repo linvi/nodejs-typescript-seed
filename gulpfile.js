@@ -89,7 +89,7 @@ gulp.task('watch:dev', function () {
 });
 
 gulp.task('serve:dev', ['build:dev'], function () {
-    return nodemon({ script: 'bin/server/server.js', watch: ['bin/server'], args, ext: 'js' })
+    return nodemon({ script: 'bin/server/server.js', watch: ['bin/server'], delay: "50", ext: 'js' })
         .on('restart', function () { });
 });
 
