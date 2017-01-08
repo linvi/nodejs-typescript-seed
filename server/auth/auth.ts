@@ -32,7 +32,7 @@ export class Auth {
             sessionRepository.findById(token.sessionId)
                 .then((session: IMongoSessionModel) => {
                     if (session && session.revoked) {
-                        return done(new Error("Session has been revoked!"), null);
+                        return done("Session has been revoked!", null);
                     }
 
                     userRepostory.findById(token.accountId)
@@ -40,15 +40,15 @@ export class Auth {
                             if (user) {
                                 return done(null, user);
                             } else {
-                                return done(new Error("User not found"), null);
+                                return done("User not found", null);
                             }
                         })
                         .catch(() => {
-                            return done(new Error("User not found"), null);
+                            return done("User not found", null);
                         });
                 })
                 .catch(() => {
-                    return done(new Error("Session not found"), null);
+                    return done("Session not found", null);
                 });;
         });
 
