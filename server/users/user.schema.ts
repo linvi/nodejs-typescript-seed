@@ -52,9 +52,9 @@ UserSchema.pre('save', function (next) {
     }
 });
 
-export interface IMongoUserModel extends Mongoose.Document {
+export interface IMongoUser extends Mongoose.Document {
     name: string;
     account: IAccountModel;
 }
 
-export const UserSchemaModel = mongooseConnection.model<IMongoUserModel>("Users", UserSchema);
+export const UserSchemaModel = mongooseConnection.model<IMongoUser>("Users", UserSchema);

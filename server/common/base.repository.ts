@@ -1,4 +1,3 @@
-import { UserModel } from './../users/user.model';
 import * as Mongoose from 'mongoose';
 import * as Promise from 'bluebird';
 

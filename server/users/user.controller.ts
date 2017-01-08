@@ -1,7 +1,6 @@
-import { IMongoUserModel } from './user.schema';
+import { UserModelFactory } from './user.factory';
+import { IMongoUser } from './user.schema';
 import { UserRepository } from './user.repository';
-import { UserModel, UserModelFactory } from './user.model';
-
 import { Log } from './../helpers/logger';
 import * as express from "express";
 
@@ -10,10 +9,10 @@ const _userRepository: UserRepository = new UserRepository();
 export class UserController {
 
     create(req: express.Request, res: express.Response): void {
-        const user: IMongoUserModel = <IMongoUserModel>req.body;
+        const user: IMongoUser = <IMongoUser>req.body;
 
         _userRepository.create(user)
-            .then((mongoUser: IMongoUserModel) => {
+            .then((mongoUser: IMongoUser) => {
                 const userModel = UserModelFactory.createFromMongo(mongoUser);
                 res.send(userModel);
             })
@@ -25,10 +24,10 @@ export class UserController {
 
     update(req: express.Request, res: express.Response): void {
         const userId: string = req.query.id;
-        const userModel: IMongoUserModel = <IMongoUserModel>req.body;
+        const userModel: IMongoUser = <IMongoUser>req.body;
 
         _userRepository.update(userId, userModel)
-            .then((mongoUser: IMongoUserModel) => {
+            .then((mongoUser: IMongoUser) => {
                 const userModel = UserModelFactory.createFromMongo(mongoUser);
                 res.send(200, userModel);
             })
@@ -53,7 +52,7 @@ export class UserController {
         const userId: string = req.query.id;
 
         _userRepository.findById(userId)
-            .then((mongoUser: IMongoUserModel) => {
+            .then((mongoUser: IMongoUser) => {
                 const userModel = UserModelFactory.createFromMongo(mongoUser);
                 res.send(userModel);
             })

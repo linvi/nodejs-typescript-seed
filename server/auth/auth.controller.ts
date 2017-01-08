@@ -1,4 +1,4 @@
-import { IMongoUserModel } from './../users/user.schema';
+import { IMongoUser } from './../users/user.schema';
 import { JWTToken } from './token.model';
 import { SessionSchemaModel, IMongoSessionModel } from './../sessions/session.schema';
 import { SessionModel } from './../sessions/session.model';
@@ -18,7 +18,7 @@ export class AuthController {
         const password: string = req.body.password;
 
         users.verifyUserCredentials(username, password)
-            .then((user: IMongoUserModel) => {
+            .then((user: IMongoUser) => {
                 var sessionModel = new SessionSchemaModel(new SessionModel(user._id));
 
                 sessions.create(sessionModel)

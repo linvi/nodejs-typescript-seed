@@ -1,8 +1,9 @@
-import { IMongoUserModel } from './../users/user.schema';
+import { IMongoUser } from './../users/user.schema';
 import { IMongoSessionModel } from './../sessions/session.schema';
 import { SessionRepository } from './../sessions/session.repository';
 import { JWTToken } from './token.model';
 import { UserRepository } from './../users/user.repository';
+
 var passport = require("passport");
 var passportJWT = require("passport-jwt");
 
@@ -35,7 +36,7 @@ export class Auth {
                     }
 
                     userRepostory.findById(token.accountId)
-                        .then((user: IMongoUserModel) => {
+                        .then((user: IMongoUser) => {
                             if (user) {
                                 return done(null, user);
                             } else {
