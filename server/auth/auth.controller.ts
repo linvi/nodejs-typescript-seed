@@ -29,7 +29,7 @@ export class AuthController {
                         });
 
                         const token = jwt.sign(payload, Auth.SECRET, {
-                            expiresIn: 1440 // expires in 24 hours
+                            expiresIn: '1y' // expires in 24 hours
                         });
 
                         // return the information including token as JSON

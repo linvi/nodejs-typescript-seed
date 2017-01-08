@@ -1,0 +1,479 @@
+{
+	"variables": [],
+	"info": {
+		"name": "MongoDB Schema Validation",
+		"_postman_id": "ab3d6376-7913-8073-9ad1-d1039d3c07f0",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User with null Account [200]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8000/user/create",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer authenticated",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"linvi\",\n\t\"account\": null\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "User create with valid Account [200]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:3000/api/user/create",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer authenticated",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"linvi\",\n\t\"account\": {\n\t\t\"password\": \"plop\",\n\t\t\"email\": \"testme@gmail.com\"\n\t}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "User create with empty account [400]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 400\"] = responseCode.code === 400;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8000/user/create",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer authenticated",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"linvi\",\n\t\"account\": {}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "User create with Account but empty password and email [400]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 400\"] = responseCode.code === 400;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8000/user/create",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer authenticated",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"linvi\",\n\t\"account\": {\n\t\t\"password\": null,\n\t\t\"email\": null\n\t}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Account with null password [400]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 400\"] = responseCode.code === 400;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8000/user/create",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer authenticated",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"linvi\",\n\t\"account\": {\n\t\t\"password\": null,\n\t\t\"email\": \"testme@gmail.com\"\n\t}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Account with null email [400]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 400\"] = responseCode.code === 400;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8000/user/create",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer authenticated",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"linvi\",\n\t\"account\": {\n\t\t\"password\": \"password\",\n\t\t\"email\": null\n\t}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Account with empty password [400]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 400\"] = responseCode.code === 400;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8000/user/create",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer authenticated",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"linvi\",\n\t\"account\": {\n\t\t\"password\": \"\",\n\t\t\"email\": \"testme@gmail.com\"\n\t}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Account with empty email [400]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 400\"] = responseCode.code === 400;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8000/user/create",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer authenticated",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"linvi\",\n\t\"account\": {\n\t\t\"password\": \"password\",\n\t\t\"email\": \"\"\n\t}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Account with invalid email [400]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 400\"] = responseCode.code === 400;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8000/user/create",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer authenticated",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"linvi\",\n\t\"account\": {\n\t\t\"password\": \"password\",\n\t\t\"email\": \"gg!\"\n\t}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Account with invalid email - 2 [400]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 400\"] = responseCode.code === 400;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8000/user/create",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer authenticated",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"linvi\",\n\t\"account\": {\n\t\t\"password\": \"password\",\n\t\t\"email\": \"salut@.com\"\n\t}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "JWT Invalidate Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:3000/api/auth/invalidate",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbklkIjoiOWU3NGU5ZjMtODc2Yi03MTk1LWNiOWItZTVlOWM1OWE3MjA4IiwidXNlcklkIjoiNTg2ZWU1NTQ5MGUyZTMxYWEwMTUzOTNiIiwiaWF0IjoxNDgzNjY2ODAyLCJleHAiOjE0ODM2NjgyNDJ9.p5RJ0lmiNkZAK2s3tX8TUO27w2jukcyi1BmQLeBXP60",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "JWT Authenticate Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:3000/api/auth/authenticate",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ODZlZTU1NDkwZTJlMzFhYTAxNTM5M2IiLCJpYXQiOjE0ODM2NjQ4NDksImV4cCI6MTQ4MzY2NjI4OX0.WOXEgnaWsrpP17qJThjRmT20YkQe8j9-xFNhF0zwf1I",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"username\": \"linvi\",\r\n\t\"password\": \"password\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "JWT Verify Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:3000/api/auth/authenticate",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ODZlZTU1NDkwZTJlMzFhYTAxNTM5M2IiLCJpYXQiOjE0ODM2NjQ4NDksImV4cCI6MTQ4MzY2NjI4OX0.WOXEgnaWsrpP17qJThjRmT20YkQe8j9-xFNhF0zwf1I",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"username\": \"linvi\",\r\n\t\"password\": \"password\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
